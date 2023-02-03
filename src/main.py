@@ -12,6 +12,11 @@ def iterate_over_text(text):
         if ':' in i:
             sub = i.split(':')
             dict[sub[0]] = sub[1]
+    return dict
+
+def create_csv(dict):
+    df = pd.DataFrame(dict)
+    df.to_csv('test.csv', index=False)
                 
 
 def openPDF(path):
@@ -26,12 +31,13 @@ def openPDF(path):
     
     # extracting text from page
     text = page.extract_text()
-    iterate_over_text(text)
+    dict = iterate_over_text(text)
+    create_csv(dict)
 
 
 
 # Function that iterate through the pdf directory
-def iterate_through_dir():
+def main_sub_routine():
     directory = 'pdf'
     for filename in os.listdir(directory):
         f = os.path.join(directory, filename)
@@ -39,7 +45,7 @@ def iterate_through_dir():
         openPDF(f)
 
 if __name__ == '__main__':
-    iterate_through_dir()
+    main_sub_routine()
 
 # with open('test.txt', 'r') as f:
 #     stripped = (line.strip() for line in f)
