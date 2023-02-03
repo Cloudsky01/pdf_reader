@@ -14,9 +14,8 @@ def iterate_over_text(text):
             dict[sub[0]] = sub[1]
     return dict
 
-def create_excel(dict):
-    df = pd.DataFrame(data=dict, index=[0])
-    df = (df.T)
+def create_excel(list):
+    df = pd.DataFrame(list)
     df.to_excel('output.xlsx')
                 
 
@@ -32,18 +31,20 @@ def openPDF(path):
     
     # extracting text from page
     text = page.extract_text()
-    dict = iterate_over_text(text)
-    create_excel(dict)
+    return iterate_over_text(text)
+    
 
 
 
 # Function that iterate through the pdf directory
 def main_sub_routine():
     directory = 'pdf'
+    finalList = []
     for filename in os.listdir(directory):
         f = os.path.join(directory, filename)
         print("Opening file: {}".format(f))
-        openPDF(f)
+        finalList.append(openPDF(f))
+    create_excel(finalList)
 
 if __name__ == '__main__':
     main_sub_routine()
