@@ -14,9 +14,10 @@ def iterate_over_text(text):
             dict[sub[0]] = sub[1]
     return dict
 
-def create_csv(dict):
-    df = pd.DataFrame(dict)
-    df.to_csv('test.csv', index=False)
+def create_excel(dict):
+    df = pd.DataFrame(data=dict, index=[0])
+    df = (df.T)
+    df.to_excel('output.xlsx')
                 
 
 def openPDF(path):
@@ -32,7 +33,7 @@ def openPDF(path):
     # extracting text from page
     text = page.extract_text()
     dict = iterate_over_text(text)
-    create_csv(dict)
+    create_excel(dict)
 
 
 
