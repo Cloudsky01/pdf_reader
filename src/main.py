@@ -5,16 +5,13 @@ import pandas as pd
 import csv
 import os
  
-def write_to_txt(text, path):
-    with open(path, 'w') as f:
-        f.write(text)
-
-def modify_txt(path):
-    with open(path) as f:
-        for line in f:
-            if ':' in line:
-                line = line.replace(':', ',')
-                
+def iterate_over_text(text):
+    list = text.split('\n')
+    dict = {}
+    for i in list:
+        if ':' in i:
+            sub = i.split(':')
+            dict[sub[0]] = sub[1]
                 
 
 def openPDF(path):
@@ -29,9 +26,7 @@ def openPDF(path):
     
     # extracting text from page
     text = page.extract_text()
-    formatted_txt_path = path.replace('pdf', 'txt')
-    write_to_txt(text, formatted_txt_path)
-    modify_txt(formatted_txt_path)
+    iterate_over_text(text)
 
 
 
