@@ -9,6 +9,14 @@ def write_to_txt(text, path):
     with open(path, 'w') as f:
         f.write(text)
 
+def modify_txt(path):
+    with open(path) as f:
+        for line in f:
+            if ':' in line:
+                line = line.replace(':', ',')
+                
+                
+
 def openPDF(path):
     # creating a pdf reader object
     reader = PdfReader(path)
@@ -23,6 +31,9 @@ def openPDF(path):
     text = page.extract_text()
     formatted_txt_path = path.replace('pdf', 'txt')
     write_to_txt(text, formatted_txt_path)
+    modify_txt(formatted_txt_path)
+
+
 
 # Function that iterate through the pdf directory
 def iterate_through_dir():
@@ -34,10 +45,6 @@ def iterate_through_dir():
 
 if __name__ == '__main__':
     iterate_through_dir()
-
-
-# with open('test.txt', 'w') as f:
-#     f.write(text)
 
 # with open('test.txt', 'r') as f:
 #     stripped = (line.strip() for line in f)
