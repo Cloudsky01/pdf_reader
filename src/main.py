@@ -5,29 +5,32 @@ import pandas as pd
 import os
  
 def iterate_over_text(text):
-    list = text.split('\n')
-    dict = {}
-    for i in list:
-        if ':' in i:
-            sub = i.split(':')
-            if sub[0] == 'Nom ':
-                if 'Nom' not in dict:
-                    dict['Nom'] = sub[1].split(',')[0]
-                    dict['Prenom'] = sub[1].split(',')[1]
+    try:
+        list = text.split('\n')
+        dict = {}
+        for i in list:
+            if ':' in i:
+                sub = i.split(':')
+                if sub[0] == 'Nom ':
+                    if 'Nom' not in dict:
+                        dict['Nom'] = sub[1].split(',')[0]
+                        dict['Prenom'] = sub[1].split(',')[1]
+                    else:
+                        dict['Nom_2'] = sub[1].split(',')[0]
+                        dict['Prenom_2'] = sub[1].split(',')[1]
+                if sub[0] in dict and sub[0] != 'Nom ':
+                    dict[sub[0]+'_2'] = sub[1]
                 else:
-                    dict['Nom_2'] = sub[1].split(',')[0]
-                    dict['Prenom_2'] = sub[1].split(',')[1]
-            if sub[0] in dict and sub[0] != 'Nom ':
-                dict[sub[0]+'_2'] = sub[1]
-            else:
-                if sub[0] != 'Nom ':
-                    dict[sub[0]] = sub[1]
-            if sub[0] == 'Superficie ':
-                dict[sub[0]] = sub[1].split(' ')[1]
-            if sub[0] == 'Mesure frontale ':
-                dict[sub[0]] = sub[1].split(' ')[0]
-            if sub[0] == "Aire d'étages ":
-                dict[sub[0]] = sub[1].split(' ')[1]
+                    if sub[0] != 'Nom ':
+                        dict[sub[0]] = sub[1]
+                if sub[0] == 'Superficie ':
+                    dict[sub[0]] = sub[1].split(' ')[1]
+                if sub[0] == 'Mesure frontale ':
+                    dict[sub[0]] = sub[1].split(' ')[0]
+                if sub[0] == "Aire d'étages ":
+                    dict[sub[0]] = sub[1].split(' ')[1]
+    except:
+        print("Error in file")
     return dict
 
 def create_excel(list):
